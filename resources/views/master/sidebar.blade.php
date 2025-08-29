@@ -5,13 +5,13 @@
     <div>
         <a href="#" class="sidebar-logo">
             <img src="{{ asset('assets/images/logo.png') }}" alt="site logo" class="light-logo">
-            <img src="{{ asset('assets/images/logo-light.png') }}" alt="site logo" class="dark-logo">
-            <img src="{{ asset('assets/images/logo-icon.png') }}" alt="site logo" class="logo-icon">
+            <img src="{{ asset('assets/images/logo/logodark.png') }}" alt="site logo" class="dark-logo">
+            <img src="{{ asset('assets/images/Logowithname.png') }}" alt="site logo" class="logo-icon">
         </a>
     </div>
     <div class="sidebar-menu-area">
         <ul class="sidebar-menu" id="sidebar-menu">
-            <li class="dropdown">
+            {{-- <li class="dropdown">
                 <a href="javascript:void(0)">
                     <iconify-icon icon="solar:home-smile-angle-outline" class="menu-icon"></iconify-icon>
                     <span>Dashboard</span>
@@ -63,12 +63,12 @@
                         <a href="#"><i class="ri-circle-fill circle-icon text-purple w-auto"></i> Project Management</a>
                     </li>
                 </ul>
-            </li>
-            <li class="sidebar-menu-group-title">Application</li>
+            </li> --}}
+            {{-- <li class="sidebar-menu-group-title">Application</li> --}}
             <li>
-                <a href="#">
+                <a href="{{ route('packages.index') }}">
                     <iconify-icon icon="mage:email" class="menu-icon"></iconify-icon>
-                    <span>Email</span>
+                    <span>Buy Plans</span>
                 </a>
             </li>
             <li>

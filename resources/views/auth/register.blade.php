@@ -25,7 +25,7 @@
       <!-- Overlay -->
       <div class="absolute inset-0 bg-black bg-opacity-40"></div>
       <div class="relative z-10 text-center">
-        <img src="/assets/images/logo/logo.png" alt="Logo" class="w-40 h-40 mx-auto mb-8 drop-shadow-lg">
+        <img src="{{ asset('assets/images/logo/logo.png') }}" alt="Logo" class="w-40 h-40 mx-auto mb-8 drop-shadow-lg">/assets/images/logo/logo.png" alt="Logo" class="w-40 h-40 mx-auto mb-8 drop-shadow-lg">
         <h1 class="text-5xl font-extrabold leading-tight mb-6">Vaishvik Welfare Foundation</h1>
         <p class="text-lg text-gray-200 max-w-md mx-auto">
           Join us in building a better future through service, dedication, and empowerment.
@@ -35,7 +35,7 @@
 
     <!-- Right side -->
     <div class="w-1/2 bg-white flex flex-col items-center justify-center p-10">
-      <img src="/assets/images/logo/Logowithname.png" alt="Logo" class="w-40 h-40 mb-1">
+      <img src="{{ asset('assets/images/logo/Logowithname.png') }}" alt="Logo" class="w-40 h-40 mb-1">
       <h2 class="text-2xl text-gray-700 mb-3 font-semibold">Create your account</h2>
 
       <div class="form-container w-full max-w-md">
