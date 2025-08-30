@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\EmailService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -44,8 +45,21 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
+        // Send registration notifications
+        $emailResults = EmailService::sendRegistrationNotifications($user);
+
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        // Prepare success message based on email results
+        $successMessage = 'Registration successful! Welcome to Vaishvik Welfare Foundation.';
+        
+        if ($emailResults['user_email_sent']) {
+            $successMessage .= ' A welcome email has been sent to your email address.';
+        } else {
+            $successMessage .= ' (Note: Welcome email could not be sent at this time.)';
+        }
+
+        return redirect(route('dashboard', absolute: false))
+            ->with('success', $successMessage);
     }
 }

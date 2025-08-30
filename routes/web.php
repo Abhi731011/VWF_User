@@ -4,9 +4,36 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\PackageController;
+use App\Services\EmailService;
+use App\Models\User;
 
 Route::get('/', function () {
     return redirect()->route('login');
+});
+
+// Test route for email functionality (remove in production)
+Route::get('/test-email', function () {
+    try {
+        // Create a test user
+        $testUser = new User([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'created_at' => now(),
+        ]);
+        
+        // Send test emails
+        EmailService::sendRegistrationNotifications($testUser);
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Test emails sent successfully!'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Error sending emails: ' . $e->getMessage()
+        ], 500);
+    }
 });
 
 
