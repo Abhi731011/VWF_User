@@ -26,7 +26,7 @@
                                 <span>{{ auth()->user()->email }}</span>
                             </li>
                             <li class="d-flex align-items-center gap-1 mb-12">
-                                <span class="w-30 text-md fw-semibold text-primary-light">Phone Number:</span>
+                                <span class="w-30 text-md fw-semibold text-primary-light">Phone:</span>
                                 <span>{{ auth()->user()->phone }}</span>
                             </li>
                             <li class="d-flex align-items-center gap-1 mb-12">

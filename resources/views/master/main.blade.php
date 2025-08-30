@@ -41,10 +41,12 @@
     @include('master.sidebar')
     <main class="dashboard-main">
         @include('master.header')
-        <div class="dashboard-main-body">
-            @yield('content')
+        <div class="dashboard-content-wrapper">
+            <div class="dashboard-main-body">
+                @yield('content')
+            </div>
+            @include('master.footer')
         </div>
-        @include('master.footer')
     </main>
     <!-- jQuery library js -->
     <script src="{{ asset('assets/js/lib/jquery-3.7.1.min.js') }}"></script>

@@ -372,6 +372,10 @@ html {
   scroll-behavior: smooth;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   background-color: var(--bg-color);
   color: var(--text-secondary-light);
@@ -15530,9 +15534,8 @@ td.fc-header-center {
 .dashboard-main {
   margin-inline-start: 0;
   display: flex;
-  flex-wrap: wrap;
-  flex-flow: column;
-  min-height: 100vh;
+  flex-direction: column;
+  height: 100vh;
   transition: all 0.3s;
 }
 
@@ -15551,8 +15554,16 @@ td.fc-header-center {
     margin-inline-start: 19.5rem;
   }
 }
+.dashboard-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 72px);
+  flex: 1;
+}
+
 .dashboard-main-body {
   padding: 0.9375rem;
+  flex: 1;
 }
 
 @media (min-width: 1400px) {
@@ -15574,3 +15585,187 @@ td.fc-header-center {
 }
 
 /* === footer css end === */
+
+/* === Dashboard Cards CSS === */
+.dashboard-card {
+  transition: all 0.3s ease;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.card-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+.card-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  min-height: 48px;
+}
+
+.card-stats {
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.stats-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.stats-value {
+  font-size: 1.125rem;
+}
+
+.dashboard-card .btn {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.dashboard-card .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dashboard-card .card-body {
+    padding: 24px !important;
+  }
+  
+  .card-icon {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+  }
+  
+  .card-title {
+    font-size: 1.125rem;
+  }
+  
+  .card-description {
+    font-size: 0.9rem;
+    min-height: 40px;
+  }
+}
+
+/* === Dashboard Section Cards CSS === */
+.dashboard-section-card {
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.dashboard-section-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+.dashboard-section-card .card-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-section-card .card-header h5 {
+  font-size: 1.125rem;
+}
+
+.section-header-icon {
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.event-item,
+.achievement-item,
+.announcement-item {
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.event-item:hover,
+.achievement-item:hover,
+.announcement-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.event-icon,
+.achievement-icon,
+.announcement-icon {
+  font-size: 18px;
+}
+
+.dashboard-section-card .btn-outline-primary,
+.dashboard-section-card .btn-outline-warning,
+.dashboard-section-card .btn-outline-info {
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 6px 16px;
+  font-size: 0.875rem;
+}
+
+.dashboard-section-card .btn-sm {
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 6px 16px;
+  font-size: 0.875rem;
+}
+
+/* Responsive adjustments for section cards */
+@media (max-width: 768px) {
+  .dashboard-section-card .card-header {
+    padding: 16px 20px;
+  }
+  
+  .dashboard-section-card .card-body {
+    padding: 20px !important;
+  }
+  
+  .event-item,
+  .achievement-item,
+  .announcement-item {
+    padding: 12px !important;
+  }
+  
+  .event-icon,
+  .achievement-icon,
+  .announcement-icon {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 16px !important;
+  }
+}
+
+/* Smaller download buttons for achievements */
+.achievement-item .btn-sm {
+  padding: 4px 12px !important;
+  font-size: 0.75rem !important;
+  border-radius: 6px !important;
+}
