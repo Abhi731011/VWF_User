@@ -18,25 +18,25 @@
     }
   </style>
 </head>
-<body class="h-screen">
-  <div class="flex h-full">
+<body class="min-h-screen">
+  <div class="flex flex-col lg:flex-row h-full">
     <!-- Left side -->
-    <div class="w-1/2 relative bg-gradient-to-br from-green-700 via-green-800 to-gray-900 text-white flex flex-col items-center justify-center p-10">
+    <div class="w-full lg:w-1/2 relative bg-gradient-to-br from-green-700 via-green-800 to-gray-900 text-white flex flex-col items-center justify-center p-10">
       <!-- Overlay -->
       <div class="absolute inset-0 bg-black bg-opacity-40"></div>
       <div class="relative z-10 text-center">
-        <img src="{{ asset('assets/images/logo/logo.png') }}" alt="Logo" class="w-40 h-40 mx-auto mb-8 drop-shadow-lg">
-        <h1 class="text-5xl font-extrabold leading-tight mb-6">Vaishvik Welfare Foundation</h1>
-        <p class="text-lg text-gray-200 max-w-md mx-auto">
+        <img src="{{ asset('assets/images/logo/logo.png') }}" alt="Logo" class="w-28 h-28 lg:w-40 lg:h-40 mx-auto mb-6 drop-shadow-lg">
+        <h1 class="text-3xl lg:text-5xl font-extrabold leading-tight mb-4 lg:mb-6">Vaishvik Welfare Foundation</h1>
+        <p class="text-base lg:text-lg text-gray-200 max-w-md mx-auto">
           Join us in building a better future through service, dedication, and empowerment.
         </p>
       </div>
     </div>
 
     <!-- Right side -->
-    <div class="w-1/2 bg-white flex flex-col items-center justify-center p-10">
-      <img src="{{ asset('assets/images/logo/Logowithname.png') }}" alt="Logo" class="w-40 h-40 mb-1">
-      <h2 class="text-2xl text-gray-700 mb-3 font-semibold">Create your account</h2>
+    <div class="w-full lg:w-1/2 bg-white flex flex-col items-center justify-center p-6 lg:p-10">
+      <img src="{{ asset('assets/images/logo/Logowithname.png') }}" alt="Logo" class="w-28 h-28 lg:w-40 lg:h-40 mb-3">
+      <h2 class="text-xl lg:text-2xl text-gray-700 mb-4 font-semibold">Create your account</h2>
 
       <div class="form-container w-full max-w-md">
         <form method="POST" action="{{ route('register') }}" class="w-full space-y-6">
@@ -54,12 +54,12 @@
               autofocus 
               autocomplete="name"
               placeholder="Enter your name"
-              class="w-full h-14 px-4 text-base border border-gray-400 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
+              class="w-full h-12 lg:h-14 px-4 text-base border border-gray-400 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
             >
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
           </div>
 
-          <!-- Email Address -->
+          <!-- Email -->
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
             <input 
@@ -70,7 +70,7 @@
               required 
               autocomplete="username"
               placeholder="Enter your email"
-              class="w-full h-14 px-4 text-base border border-gray-400 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
+              class="w-full h-12 lg:h-14 px-4 text-base border border-gray-400 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
             >
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
           </div>
@@ -85,7 +85,7 @@
               required 
               autocomplete="new-password"
               placeholder="Enter your password"
-              class="w-full h-14 px-4 text-base border border-gray-400 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
+              class="w-full h-12 lg:h-14 px-4 text-base border border-gray-400 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
             >
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
           </div>
@@ -100,14 +100,14 @@
               required 
               autocomplete="new-password"
               placeholder="Confirm your password"
-              class="w-full h-14 px-4 text-base border border-gray-400 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
+              class="w-full h-12 lg:h-14 px-4 text-base border border-gray-400 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
             >
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
           </div>
 
           <!-- Register Button -->
           <div>
-            <button type="submit" class="w-full h-14 bg-blue-600 text-white rounded-lg text-lg font-semibold shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
+            <button type="submit" class="w-full h-12 lg:h-14 bg-blue-600 text-white rounded-lg text-md font-semibold shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
               Register
             </button>
           </div>
