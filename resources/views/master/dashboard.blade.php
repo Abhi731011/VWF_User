@@ -41,7 +41,7 @@
                             <span class="stats-value fw-bold text-success-main">12</span>
                         </div>
                     </div>
-                    <a href="#" class="btn btn-success w-100 fw-semibold">
+                    <a href="{{ route('events.index') }}" class="btn btn-success w-100 fw-semibold">
                         Register Now
                     </a>
                 </div>
@@ -107,7 +107,7 @@
                             <iconify-icon icon="solar:calendar-outline" class="text-primary me-3 section-header-icon"></iconify-icon>
                             <h5 class="fw-bold text-dark mb-0">Upcoming Events</h5>
                         </div>
-                        <a href="#" class="btn btn-outline-primary btn-sm">View All</a>
+                        <a href="{{ route('events.index') }}" class="btn btn-outline-primary btn-sm">View All</a>
                     </div>
                 </div>
                 <div class="card-body p-24">
@@ -123,7 +123,7 @@
                                         <p class="text-secondary-light mb-0 small">31 Aug 2024</p>
                                     </div>
                                 </div>
-                                <a href="#" class="btn btn-success btn-sm">Join</a>
+                                <a href="{{ route('events.index') }}" class="btn btn-success btn-sm">Join</a>
                             </div>
                         </div>
                         <div class="col-md-6 mb-16">
@@ -137,7 +137,7 @@
                                         <p class="text-secondary-light mb-0 small">3 Sep 2024</p>
                                     </div>
                                 </div>
-                                <a href="#" class="btn btn-warning btn-sm">Join</a>
+                                <a href="{{ route('events.index') }}" class="btn btn-warning btn-sm">Join</a>
                             </div>
                         </div>
                     </div>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EventRegistrationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\PackageController;
 use App\Services\EmailService;
@@ -50,14 +51,26 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::put('/profile/password', [ProfileController::class, 'changePassword'])->name('password.update');
+    
+    // Event Registration Routes
+    Route::prefix('events')->name('events.')->group(function () {
+        Route::get('/', [EventRegistrationController::class, 'index'])->name('index');
+        Route::get('/my-registrations', [EventRegistrationController::class, 'myRegistrations'])->name('my-registrations');
+        Route::get('/{event}/register', [EventRegistrationController::class, 'create'])->name('register');
+        Route::post('/{event}/register', [EventRegistrationController::class, 'store'])->name('store');
+        Route::get('/registration/{eventRegistration}', [EventRegistrationController::class, 'show'])->name('registration.show');
+        Route::patch('/registration/{eventRegistration}/cancel', [EventRegistrationController::class, 'cancel'])->name('registration.cancel');
+    });
+    
     //packages
-Route::prefix('packages')->name('packages.')->group(function () {
-    Route::get('/', [PackageController::class, 'index'])->name('index');
-    Route::get('/featured', [PackageController::class, 'featured'])->name('featured');
-    Route::get('/compare', [PackageController::class, 'compare'])->name('compare');
-    Route::get('/data', [PackageController::class, 'getPackagesData'])->name('data');
-    Route::get('/{slug}', [PackageController::class, 'show'])->name('show');
-    Route::get('/{slug}/purchase', [PackageController::class, 'purchase'])->name('purchase');
-});});
+    Route::prefix('packages')->name('packages.')->group(function () {
+        Route::get('/', [PackageController::class, 'index'])->name('index');
+        Route::get('/featured', [PackageController::class, 'featured'])->name('featured');
+        Route::get('/compare', [PackageController::class, 'compare'])->name('compare');
+        Route::get('/data', [PackageController::class, 'getPackagesData'])->name('data');
+        Route::get('/{slug}', [PackageController::class, 'show'])->name('show');
+        Route::get('/{slug}/purchase', [PackageController::class, 'purchase'])->name('purchase');
+    });
+});
 
 require __DIR__.'/auth.php';
