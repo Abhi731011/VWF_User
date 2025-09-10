@@ -8,6 +8,7 @@ use App\Http\Controllers\User\PackageController;
 use App\Services\EmailService;
 use App\Models\User;
 
+
 Route::get('/', function () {
     return redirect()->route('login');
 });

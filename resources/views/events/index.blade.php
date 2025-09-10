@@ -1,5 +1,9 @@
 @extends('master.main')
 
+@php
+    $baseurl = 'http://localhost/ngo/public';
+@endphp
+
 @section('content')
 <div class="events-main-body">
     <!-- Header Section -->
@@ -10,7 +14,7 @@
                 <p class="text-secondary-light mb-0">Join our upcoming volunteer events and make a difference in your community.</p>
             </div>
             <div class="col-lg-4 text-lg-end">
-                <a href="{{ route('events.my-registrations') }}" class="btn btn-outline-primary">
+                <a href="{{ route('events.my-registrations') }}" class="btn btn-outline-primary d-inline-flex align-items-center">
                     <iconify-icon icon="solar:user-check-outline" class="me-2"></iconify-icon>
                     My Registrations
                 </a>
@@ -42,7 +46,7 @@
                 <div class="col">
                     <div class="card shadow-sm border-0 h-100 event-card">
                         @if($event->banners && count($event->banners) > 0)
-                            <img src="{{ $event->banners[0] }}" class="card-img-top event-banner" alt="{{ $event->title }}">
+                            <img src="{{ $baseurl }}/{{ $event->banners[0] }}" class="card-img-top event-banner" alt="{{ $event->title }}">
                         @else
                             <div class="card-img-top event-banner-placeholder d-flex align-items-center justify-content-center">
                                 <iconify-icon icon="solar:calendar-outline" class="text-muted" style="font-size: 3rem;"></iconify-icon>

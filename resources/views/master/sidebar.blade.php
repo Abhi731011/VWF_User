@@ -33,9 +33,15 @@
             </li>
             
             <li>
-                <a href="#">
+                <a href="{{route('events.index')}}">
                     <iconify-icon icon="solar:clipboard-list-outline" class="menu-icon"></iconify-icon>
-                    <span>Tasks & Projects</span>
+                    <span>Events</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('events.my-registrations') }}">
+                    <iconify-icon icon="solar:user-check-outline" class="menu-icon"></iconify-icon>
+                    <span>My Registrations</span>
                 </a>
             </li>
             

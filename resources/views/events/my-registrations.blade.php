@@ -1,5 +1,9 @@
 @extends('master.main')
 
+@php
+    $baseurl = 'http://localhost/ngo/public';
+@endphp
+
 @section('content')
 <div class="my-registrations-main-body">
     <!-- Header Section -->
@@ -46,7 +50,7 @@
                                 <div class="col-lg-8">
                                     <div class="d-flex align-items-start gap-3">
                                         @if($registration->event->banners && count($registration->event->banners) > 0)
-                                            <img src="{{ $registration->event->banners[0] }}" class="event-thumbnail" alt="{{ $registration->event->title }}">
+                                            <img src="{{ $baseurl }}/{{ $registration->event->banners[0] }}" class="event-thumbnail" alt="{{ $registration->event->title }}">
                                         @else
                                             <div class="event-thumbnail-placeholder d-flex align-items-center justify-content-center">
                                                 <iconify-icon icon="solar:calendar-outline" class="text-muted"></iconify-icon>

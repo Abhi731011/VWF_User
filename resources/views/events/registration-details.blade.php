@@ -1,5 +1,9 @@
 @extends('master.main')
 
+@php
+    $baseurl = 'http://localhost/ngo/public';
+@endphp
+
 @section('content')
 <div class="registration-details-main-body">
     <!-- Header Section -->
@@ -29,7 +33,7 @@
                     <h4 class="fw-bold text-dark mb-16">{{ $eventRegistration->event->title }}</h4>
                     
                     @if($eventRegistration->event->banners && count($eventRegistration->event->banners) > 0)
-                        <img src="{{ $eventRegistration->event->banners[0] }}" class="img-fluid rounded mb-16" alt="{{ $eventRegistration->event->title }}">
+                        <img src="{{ $baseurl }}/{{ $eventRegistration->event->banners[0] }}" class="img-fluid rounded mb-16" alt="{{ $eventRegistration->event->title }}">
                     @endif
                     
                     <div class="event-info">
