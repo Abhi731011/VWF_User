@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventRegistrationController;
+use App\Http\Controllers\SupportFeedbackController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\PackageController;
 use App\Services\EmailService;
@@ -71,6 +72,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/data', [PackageController::class, 'getPackagesData'])->name('data');
         Route::get('/{slug}', [PackageController::class, 'show'])->name('show');
         Route::get('/{slug}/purchase', [PackageController::class, 'purchase'])->name('purchase');
+    });
+    
+    // Support & Feedback Routes
+    Route::prefix('support')->name('support.')->group(function () {
+        Route::get('/', [SupportFeedbackController::class, 'index'])->name('index');
+        Route::post('/', [SupportFeedbackController::class, 'store'])->name('store');
     });
 });
 

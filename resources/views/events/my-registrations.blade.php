@@ -14,8 +14,8 @@
                 <p class="text-secondary-light mb-0">View and manage your event registrations.</p>
             </div>
             <div class="col-lg-4 text-lg-end">
-                <a href="{{ route('events.index') }}" class="btn btn-primary">
-                    <iconify-icon icon="solar:calendar-add-outline" class="me-2"></iconify-icon>
+                <a href="{{ route('events.index') }}" class="btn btn-primary d-flex align-items-center">
+                    <iconify-icon icon="solar:arrow-left-outline" class="me-2"></iconify-icon>
                     Browse Events
                 </a>
             </div>
@@ -82,22 +82,22 @@
                                             <!-- Status Badge -->
                                             <div class="mb-12">
                                                 @if($registration->status === 'pending')
-                                                    <span class="badge bg-warning text-dark">
+                                                    <span class="badge bg-warning text-dark d-flex align-items-center">
                                                         <iconify-icon icon="solar:clock-circle-outline" class="me-1"></iconify-icon>
                                                         Pending Review
                                                     </span>
                                                 @elseif($registration->status === 'approved')
-                                                    <span class="badge bg-success text-white">
+                                                    <span class="badge bg-success text-white d-flex align-items-center">
                                                         <iconify-icon icon="solar:check-circle-outline" class="me-1"></iconify-icon>
                                                         Approved
                                                     </span>
                                                 @elseif($registration->status === 'rejected')
-                                                    <span class="badge bg-danger text-white">
+                                                    <span class="badge bg-danger text-white d-flex align-items-center">
                                                         <iconify-icon icon="solar:close-circle-outline" class="me-1"></iconify-icon>
                                                         Rejected
                                                     </span>
                                                 @elseif($registration->status === 'cancelled')
-                                                    <span class="badge bg-secondary text-white">
+                                                    <span class="badge bg-secondary text-white d-flex align-items-center">
                                                         <iconify-icon icon="solar:minus-circle-outline" class="me-1"></iconify-icon>
                                                         Cancelled
                                                     </span>
@@ -113,9 +113,9 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-lg-4 text-lg-end">
-                                    <div class="d-flex flex-column gap-2">
-                                        <a href="{{ route('events.registration.show', $registration) }}" class="btn btn-outline-primary btn-sm">
+                                <div class="col-lg-4">
+                                    <div class="d-flex flex-column gap-2 align-items-end">
+                                        <a href="{{ route('events.registration.show', $registration) }}" class="btn btn-outline-primary btn-sm d-flex align-items-center justify-content-center">
                                             <iconify-icon icon="solar:eye-outline" class="me-1"></iconify-icon>
                                             View Details
                                         </a>
@@ -124,7 +124,7 @@
                                             <form action="{{ route('events.registration.cancel', $registration) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="submit" class="btn btn-outline-danger btn-sm" 
+                                                <button type="submit" class="btn btn-outline-danger btn-sm d-flex align-items-center justify-content-center" 
                                                         onclick="return confirm('Are you sure you want to cancel this registration?')">
                                                     <iconify-icon icon="solar:close-circle-outline" class="me-1"></iconify-icon>
                                                     Cancel Registration
@@ -175,6 +175,42 @@
 
 .event-details {
     font-size: 0.9rem;
+}
+
+.badge.d-flex {
+    width: auto !important;
+    display: inline-flex !important;
+}
+
+.btn .iconify-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    vertical-align: middle !important;
+}
+
+.btn.d-flex {
+    width: auto !important;
+    display: inline-flex !important;
+}
+
+/* Right-aligned buttons */
+.d-flex.flex-column.align-items-end .btn {
+    width: auto !important;
+    min-width: 180px !important;
+    height: 38px !important;
+    display: flex !important;
+    flex-shrink: 0 !important;
+}
+
+.d-flex.flex-column.align-items-end .btn-sm {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.875rem !important;
+    line-height: 1.2 !important;
+}
+
+.d-flex.flex-column.align-items-end form {
+    width: auto !important;
+    min-width: 180px !important;
 }
 </style>
 @endsection

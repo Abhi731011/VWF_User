@@ -15,7 +15,6 @@
             </div>
             <div class="col-lg-4 text-lg-end">
                 <a href="{{ route('events.index') }}" class="btn btn-outline-secondary">
-                    <iconify-icon icon="solar:arrow-left-outline" class="me-2"></iconify-icon>
                     Back to Events
                 </a>
             </div>
@@ -199,7 +198,7 @@
 
                         <!-- Submit Button -->
                         <div class="d-flex gap-3">
-                            <button type="submit" class="btn btn-success fw-semibold">
+                            <button type="submit" class="btn btn-success fw-semibold d-flex align-items-center">
                                 <iconify-icon icon="solar:user-plus-outline" class="me-2"></iconify-icon>
                                 Submit Registration
                             </button>

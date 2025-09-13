@@ -60,7 +60,7 @@
             </li>
             
             <li>
-              <a href="#">
+              <a href="{{ route('support.index') }}">
                     <iconify-icon icon="solar:chat-round-dots-outline" class="menu-icon"></iconify-icon>
                     <span>Support & Feedback</span>
                 </a>

@@ -15,7 +15,6 @@
             </div>
             <div class="col-lg-4 text-lg-end">
                 <a href="{{ route('events.my-registrations') }}" class="btn btn-outline-primary d-inline-flex align-items-center">
-                    <iconify-icon icon="solar:user-check-outline" class="me-2"></iconify-icon>
                     My Registrations
                 </a>
             </div>
@@ -53,64 +52,66 @@
                             </div>
                         @endif
                         
-                        <div class="card-body p-24">
-                            <div class="d-flex align-items-start justify-content-between mb-16">
-                                <div class="flex-grow-1">
-                                    <h5 class="card-title fw-bold text-dark mb-8">{{ $event->title }}</h5>
-                                    @if($event->category)
-                                        <span class="badge bg-primary-light text-primary mb-12">{{ $event->category->name }}</span>
+                        <div class="card-body p-24 d-flex flex-column h-100">
+                            <div class="flex-grow-1">
+                                <div class="d-flex align-items-start justify-content-between mb-16">
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title fw-bold text-dark mb-8">{{ $event->title }}</h5>
+                                        @if($event->category)
+                                            <span class="badge bg-primary-light text-primary mb-12">{{ $event->category->name }}</span>
+                                        @endif
+                                    </div>
+                                    @if($event->is_featured)
+                                        <span class="badge bg-warning text-dark">
+                                            <iconify-icon icon="solar:star-outline" class="me-1"></iconify-icon>
+                                            Featured
+                                        </span>
                                     @endif
                                 </div>
-                                @if($event->is_featured)
-                                    <span class="badge bg-warning text-dark">
-                                        <iconify-icon icon="solar:star-outline" class="me-1"></iconify-icon>
-                                        Featured
-                                    </span>
-                                @endif
-                            </div>
-                            
-                            <p class="card-text text-secondary-light mb-16">
-                                {{ Str::limit($event->short_description ?? $event->description, 120) }}
-                            </p>
-                            
-                            <div class="event-details mb-20">
-                                <div class="d-flex align-items-center mb-8">
-                                    <iconify-icon icon="solar:calendar-outline" class="text-primary me-2"></iconify-icon>
-                                    <span class="text-dark fw-semibold">{{ $event->event_date->format('M j, Y') }}</span>
-                                </div>
                                 
-                                @if($event->event_time)
+                                <p class="card-text text-secondary-light mb-16 event-description">
+                                    {{ Str::limit($event->short_description ?? $event->description, 120) }}
+                                </p>
+                                
+                                <div class="event-details mb-20">
                                     <div class="d-flex align-items-center mb-8">
-                                        <iconify-icon icon="solar:clock-outline" class="text-primary me-2"></iconify-icon>
+                                        <iconify-icon icon="solar:calendar-outline" class="text-primary me-2"></iconify-icon>
+                                        <span class="text-dark fw-semibold">{{ $event->event_date->format('M j, Y') }}</span>
+                                    </div>
+                                    
+                                    @if($event->event_time)
+                                        <div class="d-flex align-items-center mb-8">
+                                        <iconify-icon icon="tabler:clock" class="text-primary me-2"></iconify-icon>
                                         <span class="text-dark fw-semibold">{{ $event->event_time }}</span>
-                                    </div>
-                                @endif
-                                
-                                @if($event->venue)
-                                    <div class="d-flex align-items-center mb-8">
-                                        <iconify-icon icon="solar:map-point-outline" class="text-primary me-2"></iconify-icon>
-                                        <span class="text-dark fw-semibold">{{ $event->venue }}</span>
-                                    </div>
-                                @endif
-                                
-                                @if($event->max_attendees)
-                                    <div class="d-flex align-items-center mb-8">
-                                        <iconify-icon icon="solar:users-group-rounded-outline" class="text-primary me-2"></iconify-icon>
-                                        <span class="text-dark fw-semibold">
-                                            {{ $event->registrations()->where('status', '!=', 'cancelled')->count() }}/{{ $event->max_attendees }} registered
-                                        </span>
-                                    </div>
-                                @endif
+                                        </div>
+                                    @endif
+                                    
+                                    @if($event->venue)
+                                        <div class="d-flex align-items-center mb-8">
+                                            <iconify-icon icon="solar:map-point-outline" class="text-primary me-2"></iconify-icon>
+                                            <span class="text-dark fw-semibold">{{ $event->venue }}</span>
+                                        </div>
+                                    @endif
+                                    
+                                    @if($event->max_attendees)
+                                        <div class="d-flex align-items-center mb-8">
+                                            <iconify-icon icon="solar:users-group-rounded-outline" class="text-primary me-2"></iconify-icon>
+                                            <span class="text-dark fw-semibold">
+                                                {{ $event->registrations()->where('status', '!=', 'cancelled')->count() }}/{{ $event->max_attendees }} registered
+                                            </span>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                             
-                            <div class="d-flex gap-2">
+                            <div class="d-flex gap-2 mt-auto">
                                 @php
                                     $userRegistration = $event->registrations()->where('user_id', auth()->id())->first();
                                 @endphp
                                 
                                 @if($userRegistration)
-                                    <span class="badge bg-success text-white flex-grow-1 text-center py-2">
-                                        <iconify-icon icon="solar:check-circle-outline" class="me-1"></iconify-icon>
+                                    <span class="btn bg-success text-white flex-grow-1 d-flex align-items-center justify-content-center py-2 fw-semibold">
+                                        <iconify-icon icon="solar:check-circle-outline" class="me-2"></iconify-icon>
                                         Registered
                                     </span>
                                     <a href="{{ route('events.registration.show', $userRegistration) }}" class="btn btn-outline-success btn-sm">
@@ -118,7 +119,6 @@
                                     </a>
                                 @else
                                     <a href="{{ route('events.register', $event) }}" class="btn btn-primary w-100 fw-semibold">
-                                        <iconify-icon icon="solar:user-plus-outline" class="me-2"></iconify-icon>
                                         Register Now
                                     </a>
                                 @endif
@@ -166,6 +166,16 @@
 
 .event-details {
     font-size: 0.9rem;
+}
+
+.event-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+    max-height: calc(1.4em * 3);
 }
 </style>
 @endsection
