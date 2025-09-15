@@ -45,6 +45,13 @@
                 </a>
             </li>
             
+            <!-- <li>
+                <a href="{{ route('support.index') }}">
+                    <iconify-icon icon="solar:headphones-round-outline" class="menu-icon"></iconify-icon>
+                    <span>Support & Feedback</span>
+                </a>
+            </li> -->
+            
             <li>
                <a href="#">
                     <iconify-icon icon="solar:diploma-verified-outline" class="menu-icon"></iconify-icon>

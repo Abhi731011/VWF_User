@@ -74,4 +74,12 @@ class User extends Authenticatable
                     ->withPivot(['status', 'registered_at'])
                     ->withTimestamps();
     }
+
+    /**
+     * Get the support feedback for the user.
+     */
+    public function supportFeedback()
+    {
+        return $this->hasMany(SupportFeedback::class);
+    }
 }

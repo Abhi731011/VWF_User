@@ -78,6 +78,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('support')->name('support.')->group(function () {
         Route::get('/', [SupportFeedbackController::class, 'index'])->name('index');
         Route::post('/', [SupportFeedbackController::class, 'store'])->name('store');
+        Route::get('/{supportFeedback}', [SupportFeedbackController::class, 'show'])->name('show');
     });
 });
 

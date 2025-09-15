@@ -22,19 +22,95 @@
 
     <!-- Success/Error Messages -->
     @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert">
             <iconify-icon icon="solar:check-circle-outline" class="me-2"></iconify-icon>
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <span>{{ session('success') }}</span>
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
         </div>
     @endif
 
     @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
             <iconify-icon icon="solar:danger-circle-outline" class="me-2"></iconify-icon>
-            {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <span>{{ session('error') }}</span>
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
         </div>
+    @endif
+
+    <!-- My Support Requests Section -->
+    @if($supportRequests->count() > 0)
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0 fw-bold d-inline-flex align-items-center">
+                        <iconify-icon icon="solar:list-outline" class="me-2"></iconify-icon>
+                        My Support Requests
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Ticket #</th>
+                                    <th>Type</th>
+                                    <th>Subject</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($supportRequests as $request)
+                                <tr>
+                                    <td>
+                                        <span class="fw-semibold text-primary">#{{ $request->id }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="{{ $request->getTypeBadgeClass() }}">
+                                            {{ ucfirst(str_replace('_', ' ', $request->type)) }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="text-truncate" style="max-width: 200px;" title="{{ $request->subject }}">
+                                            {{ $request->subject }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="{{ $request->getPriorityBadgeClass() }}">
+                                            {{ ucfirst($request->priority) }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="{{ $request->getStatusBadgeClass() }}">
+                                            {{ ucfirst(str_replace('_', ' ', $request->status)) }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <small class="text-muted">{{ $request->created_at->format('M d, Y') }}</small>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('support.show', $request) }}" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center">
+                                            <iconify-icon icon="solar:eye-outline" class="me-1"></iconify-icon>
+                                            View
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    @if($supportRequests->hasPages())
+                    <div class="card-footer">
+                        {{ $supportRequests->links() }}
+                    </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
     @endif
 
     <div class="row">
@@ -74,7 +150,6 @@
                                     <option value="low" {{ old('priority') == 'low' ? 'selected' : '' }}>Low</option>
                                     <option value="medium" {{ old('priority') == 'medium' ? 'selected' : '' }}>Medium</option>
                                     <option value="high" {{ old('priority') == 'high' ? 'selected' : '' }}>High</option>
-                                    <option value="urgent" {{ old('priority') == 'urgent' ? 'selected' : '' }}>Urgent</option>
                                 </select>
                                 @error('priority')
                                     <div class="invalid-feedback">{{ $message }}</div>
