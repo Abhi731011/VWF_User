@@ -76,10 +76,17 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the support feedback for the user.
+     * Get the certificate requests for the user.
+     */
+    public function certificateRequests()
+    {
+        return $this->hasMany(CertificateRequest::class);
+    }
+    /**
+     * Get the package associated with the user.
      */
     public function supportFeedback()
-    {
-        return $this->hasMany(SupportFeedback::class);
-    }
+{
+    return $this->hasMany(SupportFeedback::class);
+}
 }
