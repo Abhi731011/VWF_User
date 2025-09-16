@@ -45,6 +45,13 @@
                 </a>
             </li>
             
+            <li>
+                <a href="{{ route('projects.index') }}">
+                    <iconify-icon icon="solar:folder-outline" class="menu-icon"></iconify-icon>
+                    <span>Projects</span>
+                </a>
+            </li>
+            
             <!-- <li>
                 <a href="{{ route('support.index') }}">
                     <iconify-icon icon="solar:headphones-round-outline" class="menu-icon"></iconify-icon>

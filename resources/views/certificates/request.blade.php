@@ -10,30 +10,38 @@
                         <div class="dashboard-card-header">
                             <h4 class="dashboard-card-title">Certificate Request</h4>
                         </div>
-                        <div class="dashboard-card-body">
+                        <div class="dashboard-card-body p-4">
                             @if(!$isEligible)
                                 <div class="alert alert-warning" role="alert">
                                     <iconify-icon icon="solar:danger-circle-outline" class="me-2"></iconify-icon>
                                     <strong>Not Eligible:</strong> You need to be registered for at least 30 days to request a certificate.
                                 </div>
-                                <div class="text-center">
+                                <div class="text-center mt-3">
                                     <button type="button" class="btn btn-primary" onclick="showNotEligibleAlert()">
                                         Request Certificate
                                     </button>
                                 </div>
                             @elseif($existingRequest)
-                                <div class="alert alert-info" role="alert">
-                                    <iconify-icon icon="solar:info-circle-outline" class="me-2"></iconify-icon>
-                                    <strong>Request Status:</strong> 
+                                <div class="alert d-flex align-items-center @if($existingRequest->status === 'pending') alert-warning @elseif($existingRequest->status === 'approved') alert-success @else alert-danger @endif" role="alert">
                                     @if($existingRequest->status === 'pending')
-                                        Your certificate request is currently pending review.
+                                        <iconify-icon icon="solar:clock-circle-outline" class="me-2"></iconify-icon>
                                     @elseif($existingRequest->status === 'approved')
-                                        Your certificate request has been approved!
+                                        <iconify-icon icon="solar:check-circle-outline" class="me-2"></iconify-icon>
                                     @else
-                                        Your certificate request was rejected.
+                                        <iconify-icon icon="solar:close-circle-outline" class="me-2"></iconify-icon>
                                     @endif
+                                    <span>
+                                        <strong>Request Status:</strong> 
+                                        @if($existingRequest->status === 'pending')
+                                            Your certificate request is currently pending review.
+                                        @elseif($existingRequest->status === 'approved')
+                                            Your certificate request has been approved!
+                                        @else
+                                            Your certificate request was rejected.
+                                        @endif
+                                    </span>
                                 </div>
-                                <div class="text-center">
+                                <div class="text-center mt-3">
                                     <a href="{{ route('certificates.show', $existingRequest->id) }}" class="btn btn-primary">
                                         View Request Details
                                     </a>
@@ -183,4 +191,50 @@ $(document).ready(function() {
 </script>
 @endpush
 @endsection
+
+@push('css')
+<style>
+.dashboard-card-body {
+    padding: 2rem !important;
+}
+
+.dashboard-card-header {
+    padding: 1.5rem 2rem !important;
+    border-bottom: 1px solid #e9ecef !important;
+}
+
+.dashboard-card-title {
+    margin-bottom: 0 !important;
+}
+
+.alert {
+    margin-bottom: 1.5rem !important;
+}
+
+.text-center {
+    margin-top: 1.5rem !important;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem !important;
+    margin: 0.5rem !important;
+}
+
+.form-control {
+    margin-bottom: 1rem !important;
+}
+
+.form-label {
+    margin-bottom: 0.5rem !important;
+}
+
+.row {
+    margin-bottom: 1rem !important;
+}
+
+.row:last-child {
+    margin-bottom: 0 !important;
+}
+</style>
+@endpush
 
