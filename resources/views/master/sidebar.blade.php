@@ -46,9 +46,9 @@
             </li>
             
             <li>
-               <a href="#">
+               <a href="{{ route('certificates.create') }}">
                     <iconify-icon icon="solar:diploma-verified-outline" class="menu-icon"></iconify-icon>
-                    <span>Certificate</span>
+                    <span>Certificate Request</span>
                 </a>
             </li>
             

@@ -74,4 +74,12 @@ class User extends Authenticatable
                     ->withPivot(['status', 'registered_at'])
                     ->withTimestamps();
     }
+
+    /**
+     * Get the certificate requests for the user.
+     */
+    public function certificateRequests()
+    {
+        return $this->hasMany(CertificateRequest::class);
+    }
 }

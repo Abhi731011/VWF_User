@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventRegistrationController;
 use App\Http\Controllers\SupportFeedbackController;
+use App\Http\Controllers\CertificateRequestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\PackageController;
 use App\Services\EmailService;
@@ -78,6 +79,14 @@ Route::middleware('auth')->group(function () {
     Route::prefix('support')->name('support.')->group(function () {
         Route::get('/', [SupportFeedbackController::class, 'index'])->name('index');
         Route::post('/', [SupportFeedbackController::class, 'store'])->name('store');
+    });
+    
+    // Certificate Request Routes
+    Route::prefix('certificates')->name('certificates.')->group(function () {
+        Route::get('/', [CertificateRequestController::class, 'index'])->name('index');
+        Route::get('/create', [CertificateRequestController::class, 'create'])->name('create');
+        Route::post('/', [CertificateRequestController::class, 'store'])->name('store');
+        Route::get('/{certificateRequest}', [CertificateRequestController::class, 'show'])->name('show');
     });
 });
 
