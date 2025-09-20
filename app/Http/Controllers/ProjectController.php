@@ -158,6 +158,9 @@ class ProjectController extends Controller
                 'success' => true,
                 'message' => 'Donation successful! Thank you for your contribution.',
                 'donation_id' => $donation->id,
+                'redirect_url' => route('projects.donation-success', $donation->id),
+                'close_modal' => true,
+                'show_success' => true,
             ]);
 
         } catch (\Exception $e) {
@@ -167,7 +170,9 @@ class ProjectController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Payment verification failed. Please contact support.'
+                'message' => 'Payment verification failed. Please contact support.',
+                'close_modal' => false,
+                'show_error' => true,
             ], 400);
         }
     }

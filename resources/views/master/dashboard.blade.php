@@ -214,7 +214,7 @@
                                                 <p class="text-secondary-light mb-0 small">{{ $event->event_date ? $event->event_date->format('M d, Y') : 'TBA' }}</p>
                                             </div>
                                         </div>
-                                        <a href="{{ route('events.show', $event->slug) }}" class="btn btn-success btn-sm">View</a>
+                                         <a href="{{ route('events.register', $event->id) }}" class="btn btn-success btn-sm">Register</a>
                                     </div>
                                 </div>
                             @endforeach

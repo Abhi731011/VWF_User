@@ -117,8 +117,11 @@ class PackageController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Payment successful!',
+                'message' => 'Payment successful! Your package has been activated.',
                 'purchase_id' => $purchase->id,
+                'redirect_url' => route('packages.payment-success', $purchase->id),
+                'close_modal' => true,
+                'show_success' => true,
             ]);
 
         } catch (\Exception $e) {
@@ -128,7 +131,9 @@ class PackageController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Payment verification failed. Please contact support.'
+                'message' => 'Payment verification failed. Please contact support.',
+                'close_modal' => false,
+                'show_error' => true,
             ], 400);
         }
     }
