@@ -86,9 +86,25 @@ class User extends Authenticatable
      * Get the package associated with the user.
      */
     public function supportFeedback()
-{
-    return $this->hasMany(SupportFeedback::class);
-}
+    {
+        return $this->hasMany(SupportFeedback::class);
+    }
+
+    /**
+     * Get the package purchases for the user.
+     */
+    public function packagePurchases()
+    {
+        return $this->hasMany(PackagePurchase::class);
+    }
+
+    /**
+     * Get the donations for the user.
+     */
+    public function donations()
+    {
+        return $this->hasMany(Donation::class);
+    }
 
     /**
      * Generate a unique volunteer ID in format VWF_YY_0001
