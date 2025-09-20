@@ -229,7 +229,12 @@
                 <div class="card-body p-24">
                     <div class="text-center">
                         <p class="text-muted mb-16">Interested in supporting this project?</p>
-                        <button class="btn btn-success btn-lg w-100 d-inline-flex align-items-center justify-content-center">
+                        <button class="btn btn-success btn-lg w-100 d-inline-flex align-items-center justify-content-center"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#donationModal" 
+                                data-project-id="{{ $project->id }}"
+                                data-project-name="{{ $project->title }}"
+                                data-project-slug="{{ $project->slug }}">
                             <iconify-icon icon="solar:hand-money-outline" class="me-2"></iconify-icon>
                             Donate Now
                         </button>
@@ -302,4 +307,217 @@
     overflow: hidden;
 }
 </style>
+
+<!-- Donation Modal -->
+<div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="donationModalLabel">Make a Donation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="donationForm">
+                    @csrf
+                    <input type="hidden" id="project_id" name="project_id">
+                    <input type="hidden" id="donation_id" name="donation_id">
+                    
+                    <div class="mb-3">
+                        <label for="project_name" class="form-label">Project</label>
+                        <input type="text" class="form-control" id="project_name" readonly>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="amount" class="form-label">Donation Amount (₹)</label>
+                        <input type="number" class="form-control" id="amount" name="amount" min="1" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="donor_name" class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="donor_name" name="donor_name" 
+                               value="{{ auth()->user()->name }}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="donor_email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="donor_email" name="donor_email" 
+                               value="{{ auth()->user()->email }}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="donor_phone" class="form-label">Phone Number (Optional)</label>
+                        <input type="tel" class="form-control" id="donor_phone" name="donor_phone">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message (Optional)</label>
+                        <textarea class="form-control" id="message" name="message" rows="3" 
+                                  placeholder="Leave a message for the project organizers..."></textarea>
+                    </div>
+                    
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="is_anonymous" name="is_anonymous">
+                        <label class="form-check-label" for="is_anonymous">
+                            Make this donation anonymous
+                        </label>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success" id="donateButton">
+                            <span id="donateButtonText">Donate Now</span>
+                            <span id="donateButtonSpinner" class="spinner-border spinner-border-sm d-none" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Razorpay Checkout Script -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const donationModal = document.getElementById('donationModal');
+    const donationForm = document.getElementById('donationForm');
+    const donateButton = document.getElementById('donateButton');
+    const donateButtonText = document.getElementById('donateButtonText');
+    const donateButtonSpinner = document.getElementById('donateButtonSpinner');
+    
+    // Handle modal show event
+    donationModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const projectId = button.getAttribute('data-project-id');
+        const projectName = button.getAttribute('data-project-name');
+        
+        // Update modal content
+        document.getElementById('project_id').value = projectId;
+        document.getElementById('project_name').value = projectName;
+    });
+    
+    // Handle form submission
+    donationForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const projectId = formData.get('project_id');
+        const amount = formData.get('amount');
+        const donorName = formData.get('donor_name');
+        const donorEmail = formData.get('donor_email');
+        const donorPhone = formData.get('donor_phone');
+        const message = formData.get('message');
+        const isAnonymous = formData.get('is_anonymous') ? true : false;
+        
+        // Show loading state
+        donateButton.disabled = true;
+        donateButtonText.classList.add('d-none');
+        donateButtonSpinner.classList.remove('d-none');
+        
+        // Initiate donation
+        fetch('{{ route("projects.initiate-donation") }}', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                project_id: projectId,
+                amount: amount,
+                donor_name: donorName,
+                donor_email: donorEmail,
+                donor_phone: donorPhone,
+                message: message,
+                is_anonymous: isAnonymous
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Open Razorpay checkout
+                const options = {
+                    key: data.key,
+                    amount: data.amount,
+                    currency: data.currency,
+                    name: 'NGO Project Donation',
+                    description: 'Donation for: ' + document.getElementById('project_name').value,
+                    order_id: data.order_id,
+                    handler: function (response) {
+                        // Handle successful payment
+                        handleDonationSuccess(response, data.donation_id);
+                    },
+                    prefill: {
+                        email: donorEmail,
+                        name: donorName
+                    },
+                    theme: {
+                        color: '#28a745'
+                    },
+                    modal: {
+                        ondismiss: function() {
+                            // Reset button state
+                            resetDonateButton();
+                        }
+                    }
+                };
+                
+                const rzp = new Razorpay(options);
+                rzp.open();
+            } else {
+                alert('Error: ' + data.message);
+                resetDonateButton();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+            resetDonateButton();
+        });
+    });
+    
+    function handleDonationSuccess(response, donationId) {
+        // Send payment details to backend
+        fetch('{{ route("projects.donation-callback") }}', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                donation_id: donationId
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Close modal
+                const modal = bootstrap.Modal.getInstance(donationModal);
+                modal.hide();
+                
+                // Redirect to success page
+                window.location.href = '{{ url("projects/donation-success") }}/' + data.donation_id;
+            } else {
+                alert('Payment verification failed: ' + data.message);
+                resetDonateButton();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Payment verification failed. Please contact support.');
+            resetDonateButton();
+        });
+    }
+    
+    function resetDonateButton() {
+        donateButton.disabled = false;
+        donateButtonText.classList.remove('d-none');
+        donateButtonSpinner.classList.add('d-none');
+    }
+});
+</script>
 @endsection

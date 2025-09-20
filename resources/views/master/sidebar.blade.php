@@ -33,6 +33,13 @@
             </li>
             
             <li>
+                <a href="{{ route('packages.my-purchases') }}">
+                    <iconify-icon icon="solar:bag-heart-outline" class="menu-icon"></iconify-icon>
+                    <span>My Purchases</span>
+                </a>
+            </li>
+            
+            <li>
                 <a href="{{route('events.index')}}">
                     <iconify-icon icon="solar:clipboard-list-outline" class="menu-icon"></iconify-icon>
                     <span>Events</span>
@@ -49,6 +56,13 @@
                 <a href="{{ route('projects.index') }}">
                     <iconify-icon icon="solar:folder-outline" class="menu-icon"></iconify-icon>
                     <span>Projects</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="{{ route('projects.my-donations') }}">
+                    <iconify-icon icon="solar:heart-outline" class="menu-icon"></iconify-icon>
+                    <span>My Donations</span>
                 </a>
             </li>
             

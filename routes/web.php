@@ -41,6 +41,66 @@ Route::get('/test-email', function () {
     }
 });
 
+// Test route for Razorpay integration (remove in production)
+Route::get('/test-razorpay', function () {
+    try {
+        $api = new \Razorpay\Api\Api(env('RAZORPAY_KEY_ID'), env('RAZORPAY_KEY_SECRET'));
+        return response()->json([
+            'success' => true,
+            'message' => 'Razorpay API initialized successfully!',
+            'key_id' => env('RAZORPAY_KEY_ID')
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Error initializing Razorpay: ' . $e->getMessage()
+        ], 500);
+    }
+});
+
+// Test route for projects data (remove in production)
+Route::get('/test-projects', function () {
+    try {
+        $projects = \App\Models\Project::where('status', 'published')
+                          ->where('visibility', true)
+                          ->with('category')
+                          ->orderBy('created_at', 'desc')
+                          ->limit(1)
+                          ->get();
+        
+        if ($projects->count() > 0) {
+            $project = $projects->first();
+            return response()->json([
+                'success' => true,
+                'project_data' => [
+                    'title' => $project->title,
+                    'title_type' => gettype($project->title),
+                    'slug' => $project->slug,
+                    'slug_type' => gettype($project->slug),
+                    'images' => $project->images,
+                    'images_type' => gettype($project->images),
+                    'category' => $project->category,
+                    'category_type' => gettype($project->category),
+                    'location' => $project->location,
+                    'location_type' => gettype($project->location),
+                    'short_description' => $project->short_description,
+                    'short_description_type' => gettype($project->short_description),
+                ]
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'No projects found'
+            ]);
+        }
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Error: ' . $e->getMessage()
+        ], 500);
+    }
+});
+
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -69,11 +129,17 @@ Route::middleware('auth')->group(function () {
     //packages
     Route::prefix('packages')->name('packages.')->group(function () {
         Route::get('/', [PackageController::class, 'index'])->name('index');
+        Route::get('/my-purchases', [PackageController::class, 'myPurchases'])->name('my-purchases');
         Route::get('/featured', [PackageController::class, 'featured'])->name('featured');
         Route::get('/compare', [PackageController::class, 'compare'])->name('compare');
         Route::get('/data', [PackageController::class, 'getPackagesData'])->name('data');
         Route::get('/{slug}', [PackageController::class, 'show'])->name('show');
         Route::get('/{slug}/purchase', [PackageController::class, 'purchase'])->name('purchase');
+        
+        // Payment routes
+        Route::post('/initiate-payment', [PackageController::class, 'initiatePayment'])->name('initiate-payment');
+        Route::post('/payment-callback', [PackageController::class, 'handlePaymentCallback'])->name('payment-callback');
+        Route::get('/payment-success/{purchaseId}', [PackageController::class, 'paymentSuccess'])->name('payment-success');
     });
     
     // Support & Feedback Routes
@@ -86,7 +152,13 @@ Route::middleware('auth')->group(function () {
     // Projects Routes
     Route::prefix('projects')->name('projects.')->group(function () {
         Route::get('/', [ProjectController::class, 'index'])->name('index');
+        Route::get('/my-donations', [ProjectController::class, 'myDonations'])->name('my-donations');
         Route::get('/{project}', [ProjectController::class, 'show'])->name('show');
+        
+        // Donation routes
+        Route::post('/initiate-donation', [ProjectController::class, 'initiateDonation'])->name('initiate-donation');
+        Route::post('/donation-callback', [ProjectController::class, 'handleDonationCallback'])->name('donation-callback');
+        Route::get('/donation-success/{donationId}', [ProjectController::class, 'donationSuccess'])->name('donation-success');
     });
     
     // Certificate Request Routes
