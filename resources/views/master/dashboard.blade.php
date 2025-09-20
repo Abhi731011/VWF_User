@@ -14,7 +14,7 @@
                     <div class="d-flex align-items-center justify-content-lg-end gap-2">
                         <span class="fw-semibold text-primary">Volunteer ID:</span>
                         <span class="badge bg-primary-light text-primary fw-semibold px-3 py-2">
-                            {{ auth()->user() ? auth()->user()->id : 'N/A' }}
+                            {{ auth()->user() ? auth()->user()->volunteer_id : 'N/A' }}
                         </span>
                     </div>
                 </div>
