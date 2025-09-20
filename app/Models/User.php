@@ -31,7 +31,7 @@ class User extends Authenticatable
         'country',
         'zip_code',
         'package_id',
-        
+        'volunteer_id',
     ];
 
     /**
@@ -89,4 +89,29 @@ class User extends Authenticatable
 {
     return $this->hasMany(SupportFeedback::class);
 }
+
+    /**
+     * Generate a unique volunteer ID in format VWF_YY_0001
+     */
+    public static function generateVolunteerId()
+    {
+        $year = date('y'); // Get last 2 digits of current year
+        $prefix = "VWF_{$year}_";
+        
+        // Get the last volunteer ID for this year
+        $lastUser = self::where('volunteer_id', 'like', $prefix . '%')
+            ->orderBy('volunteer_id', 'desc')
+            ->first();
+        
+        if ($lastUser) {
+            // Extract the number part and increment
+            $lastNumber = (int) substr($lastUser->volunteer_id, -4);
+            $newNumber = $lastNumber + 1;
+        } else {
+            // First volunteer of the year
+            $newNumber = 1;
+        }
+        
+        return $prefix . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
+    }
 }
