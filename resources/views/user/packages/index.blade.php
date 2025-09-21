@@ -9,20 +9,18 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
-                <h2 class="mb-0">
-                    <i class="ri-shopping-bag-line me-2"></i>
-                    Available Packages
-                </h2>
-                <a href="{{ route('packages.my-purchases') }}" class="btn btn-outline-primary">
-                    <i class="ri-shopping-bag-line me-2"></i>
+            <h3 class="fw-bold text-primary mb-2"> Available Packages</h3>
+                
+                <a href="{{ route('packages.my-purchases') }}" class="btn btn-outline-primary d-flex align-items-center">
+                    <iconify-icon icon="solar:bag-4-outline" class="me-2" style="font-size: 1.1rem;"></iconify-icon>
                     My Purchases
                 </a>
             </div>
         </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row">
         @foreach($packages as $package)
-            <div class="col-12 col-md-6 col-lg-4 mb-4">
+            <div class="col-12 col-md-6 col-lg-4 mb-4 mt-3">
                 <div class="card shadow-sm package-card h-100" style="border-radius: 20px; overflow: hidden;">
                     <div class="card-header text-center text-white" style="background:
                         @if($package->name == 'Starter') linear-gradient(90deg, #ff512f 0%, #dd2476 100%);
@@ -41,12 +39,17 @@
                                 <img src="{{ $baseurl . $package->image }}" alt="{{ $package->name }}" style="max-width: 200px; max-height: 400px; border-radius: 10px;">
                             </div>
                         @endif
-                        <div class="mb-2 text-center">
+                        <div class="mb-3 text-center">
                             @if($package->icon)
-                                <img src="{{ $baseurl . $package->icon }}" alt="icon" style="max-width: 32px; max-height: 32px;">
+                                <div class="d-inline-flex align-items-center justify-content-center mb-2" style="width: 48px; height: 48px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px;">
+                                    <img src="{{ $baseurl . $package->icon }}" alt="icon" style="max-width: 24px; max-height: 24px; filter: brightness(0) invert(1);">
+                                </div>
                             @endif
                             @if($package->is_featured)
-                                <span class="badge bg-success ms-2">Featured</span>
+                                <span class="badge bg-warning text-dark fw-semibold px-3 py-2 rounded-pill">
+                                    <iconify-icon icon="solar:star-bold" class="me-1"></iconify-icon>
+                                    Featured
+                                </span>
                             @endif
                         </div>
                         {{-- <div class="mb-2"><strong>Slug:</strong> {{ $package->slug }}</div> --}}
@@ -56,23 +59,27 @@
                         <ul class="list-unstyled mb-0">
                             @php
                                 $features = $package->perks ?? [];
-                                $maxFeatures = 7;
+                                // Filter out empty features and limit to max 7
+                                $validFeatures = array_filter($features, function($feature) {
+                                    return !empty($feature) && trim($feature) !== '';
+                                });
+                                $displayFeatures = array_slice($validFeatures, 0, 7);
                             @endphp
-                            @for($i = 0; $i < $maxFeatures; $i++)
-                                <li class="d-flex align-items-center mb-2">
-                                    @if(isset($features[$i]) && $features[$i])
-                                        <span class="me-2" style="color: #38ef7d; font-size: 1.2rem;">
-                                            <i class="ri-checkbox-circle-fill"></i>
-                                        </span>
-                                        <span>{{ $features[$i] }}</span>
-                                    @else
-                                        <span class="me-2" style="color: #ccc; font-size: 1.2rem;">
-                                            {{-- <i class="ri-checkbox-blank-circle-line"></i> --}}
-                                        </span>
-                                        {{-- <span style="color: #ccc;">Feature not available</span> --}}
-                                    @endif
+                            @if(count($displayFeatures) > 0)
+                                @foreach($displayFeatures as $feature)
+                                    <li class="d-flex align-items-center mb-2 feature-item">
+                                        <div class="me-3 d-flex align-items-center justify-content-center" style="width: 20px; height: 20px; background-color: #38ef7d; border-radius: 50%; flex-shrink: 0;">
+                                            <iconify-icon icon="solar:check-circle-bold" style="color: white; font-size: 0.8rem;"></iconify-icon>
+                                        </div>
+                                        <span class="flex-grow-1">{{ $feature }}</span>
+                                    </li>
+                                @endforeach
+                            @else
+                                <li class="text-center text-muted py-2">
+                                    <iconify-icon icon="solar:info-circle-outline" class="me-2"></iconify-icon>
+                                    No features listed
                                 </li>
-                            @endfor
+                            @endif
                         </ul>
                     </div>
                     <div class="card-footer bg-transparent border-0 text-center">
@@ -94,11 +101,39 @@
 
 <style>
     .package-card {
-        transition: transform 0.2s;
+        transition: all 0.3s ease;
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     .package-card:hover {
-        transform: translateY(-5px) scale(1.03);
-        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+    }
+    .card-header {
+        position: relative;
+        overflow: hidden;
+    }
+    .card-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+    }
+    .package-card:hover .card-header::before {
+        left: 100%;
+    }
+    .feature-item {
+        transition: all 0.2s ease;
+    }
+    .feature-item:hover {
+        background-color: rgba(56, 239, 125, 0.1);
+        border-radius: 8px;
+        padding: 4px 8px;
+        margin: 0 -8px;
     }
     @media (max-width: 576px) {
         .package-card {
@@ -106,6 +141,10 @@
         }
         .card-header {
             font-size: 1.1rem;
+        }
+        .container {
+            padding-left: 15px;
+            padding-right: 15px;
         }
     }
 </style>

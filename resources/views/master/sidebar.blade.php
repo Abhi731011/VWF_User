@@ -81,11 +81,7 @@
             </li>
             
             <li>
-          <a href="#">
-                    <iconify-icon icon="solar:bell-outline" class="menu-icon"></iconify-icon>
-                    <span>Announcements</span>
-                </a>
-            </li>
+         
             
             <li>
               <a href="{{ route('support.index') }}">

@@ -8,6 +8,8 @@
     <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}" sizes="16x16" />
     <!-- Remix icon font css -->
     <link rel="stylesheet" href="{{ asset('assets/css/remixicon.css') }}" />
+    <!-- Fallback CDN for Remix Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" onerror="console.warn('CDN Remix Icons failed to load')" />
     <!-- Bootstrap css -->
     <link rel="stylesheet" href="{{ asset('assets/css/lib/bootstrap.min.css') }}" />
     <!-- Apex Chart css -->

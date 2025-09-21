@@ -9,12 +9,11 @@
     <div class="row">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="mb-0">
-                    <i class="ri-heart-line me-2"></i>
-                    My Donations
-                </h2>
+            <h3 class="fw-bold text-primary mb-2">   My Donations</h3>
+
+                
                 <a href="{{ route('projects.index') }}" class="btn btn-primary">
-                    <i class="ri-add-line me-2"></i>
+                    <i class="ri-add-line me-2" style="font-size: 1.1em;"></i>
                     Donate to More Projects
                 </a>
             </div>
@@ -84,29 +83,30 @@
                                 </div>
                                 
                                 <div class="card-footer bg-transparent border-0">
-                                    @if($donation->status == 'completed')
-                                        <div class="d-grid">
-                                            <button class="btn btn-success" disabled>
-                                                <i class="ri-checkbox-circle-fill me-2"></i>
-                                                Donation Completed
-                                            </button>
-                                        </div>
-                                    @elseif($donation->status == 'pending')
-                                        <div class="d-grid">
-                                            <button class="btn btn-warning" disabled>
-                                                <i class="ri-time-line me-2"></i>
-                                                Payment Pending
-                                            </button>
-                                        </div>
-                                    @elseif($donation->status == 'failed')
-                                        <div class="d-grid">
-                                            <a href="{{ route('projects.index') }}" class="btn btn-danger">
-                                                <i class="ri-refresh-line me-2"></i>
-                                                Retry Donation
-                                            </a>
-                                        </div>
-                                    @endif
-                                </div>
+    @if($donation->status == 'completed')
+        <div class="d-grid">
+            <button class="btn btn-success" disabled>
+                <i class="ri-check-double-line me-2" style="font-size: 1.1em;"></i>
+                Donation Completed
+            </button>
+        </div>
+    @elseif($donation->status == 'pending')
+        <div class="d-grid">
+            <button class="btn btn-warning" disabled>
+                <i class="ri-time-fill me-2" style="font-size: 1.1em;"></i>
+                Payment Pending
+            </button>
+        </div>
+    @elseif($donation->status == 'failed')
+        <div class="d-grid">
+            <a href="{{ route('projects.index') }}" class="btn btn-danger">
+                <i class="ri-refresh-fill me-2" style="font-size: 1.1em;"></i>
+                Retry Donation
+            </a>
+        </div>
+    @endif
+</div>
+
                             </div>
                         </div>
                     @endforeach
@@ -119,7 +119,7 @@
                     <h4 class="text-muted mb-3">No Donations Yet</h4>
                     <p class="text-muted mb-4">You haven't made any donations yet. Explore our projects and make a difference in your community!</p>
                     <a href="{{ route('projects.index') }}" class="btn btn-primary btn-lg">
-                        <i class="ri-heart-line me-2"></i>
+                        <i class="ri-heart-line me-2" style="font-size: 1.2em;"></i>
                         Browse Projects
                     </a>
                 </div>
@@ -142,10 +142,65 @@
         padding: 0.375rem 0.75rem;
     }
     
+    /* Ensure Remix Icons are properly displayed */
+    [class^="ri-"], [class*=" ri-"] {
+        font-family: 'remixicon' !important;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    
+    /* Fallback for missing icons */
+    .ri-heart-line:before { content: "♥"; }
+    .ri-add-line:before { content: "+"; }
+    .ri-checkbox-circle-fill:before { content: "✓"; }
+    .ri-time-line:before { content: "⏰"; }
+    .ri-refresh-line:before { content: "↻"; }
+    
     @media (max-width: 576px) {
         .card {
             margin-bottom: 1.5rem;
         }
     }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if Remix Icons font is loaded
+    function checkFontLoaded() {
+        const testElement = document.createElement('span');
+        testElement.className = 'ri-heart-line';
+        testElement.style.visibility = 'hidden';
+        testElement.style.position = 'absolute';
+        testElement.style.fontSize = '16px';
+        testElement.textContent = '♥';
+        document.body.appendChild(testElement);
+        
+        const computedStyle = window.getComputedStyle(testElement);
+        const fontFamily = computedStyle.getPropertyValue('font-family');
+        
+        document.body.removeChild(testElement);
+        
+        if (fontFamily.includes('remixicon')) {
+            console.log('Remix Icons font loaded successfully');
+        } else {
+            console.warn('Remix Icons font not loaded, using fallback icons');
+            // Force fallback icons
+            document.querySelectorAll('[class^="ri-"]').forEach(icon => {
+                icon.style.fontFamily = 'Arial, sans-serif';
+            });
+        }
+    }
+    
+    // Check font after a short delay to ensure it's loaded
+    setTimeout(checkFontLoaded, 100);
+    
+    // Also check when fonts are loaded
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(checkFontLoaded);
+    }
+});
+</script>
 @endsection

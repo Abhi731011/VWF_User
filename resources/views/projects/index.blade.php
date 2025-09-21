@@ -311,9 +311,9 @@
                                   placeholder="Leave a message for the project organizers..."></textarea>
                     </div>
                     
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="is_anonymous" name="is_anonymous">
-                        <label class="form-check-label" for="is_anonymous">
+                    <div class="mb-3 form-check d-flex align-items-center">
+                        <input type="checkbox" class="form-check-input me-2" id="is_anonymous" name="is_anonymous" style="margin-top: 0;">
+                        <label class="form-check-label mb-0" for="is_anonymous">
                             Make this donation anonymous
                         </label>
                     </div>

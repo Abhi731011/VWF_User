@@ -11,9 +11,9 @@
             </div>
             <div class="col-lg-4 text-lg-end">
                 <div class="volunteer-id-card">
-                    <div class="d-flex align-items-center justify-content-lg-end gap-2">
+                    <div class="d-flex align-items-center justify-content-lg-end gap-3">
                         <span class="fw-semibold text-primary">Volunteer ID:</span>
-                        <span class="badge bg-primary-light text-primary fw-semibold px-3 py-2">
+                        <span class="badge bg-primary-light text-primary fw-semibold px-4 py-1 rounded-pill">
                             {{ auth()->user() ? auth()->user()->volunteer_id : 'N/A' }}
                         </span>
                     </div>
@@ -210,7 +210,7 @@
                                                 <iconify-icon icon="solar:calendar-outline" class="text-success-main"></iconify-icon>
                                     </div>
                                     <div>
-                                                <h6 class="fw-semibold mb-1">{{ $event->title }}</h6>
+                                                <h6 class="fw-semibold mb-1 text-truncate-2" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; max-height: 2.8em;">{{ $event->title }}</h6>
                                                 <p class="text-secondary-light mb-0 small">{{ $event->event_date ? $event->event_date->format('M d, Y') : 'TBA' }}</p>
                                             </div>
                                         </div>
@@ -279,7 +279,7 @@
                                 @foreach($recentUserDonations as $donation)
                                     <div class="activity-item d-flex align-items-center justify-content-between p-12 bg-light rounded-8 mb-8">
                                         <div class="d-flex align-items-center gap-3">
-                                            <div class="activity-icon bg-primary-subtle rounded-circle w-32-px h-32-px d-flex align-items-center justify-content-center">
+                                            <div class="activity-icon bg-primary-subtle rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; min-width: 32px; min-height: 32px;">
                                                 <iconify-icon icon="solar:heart-outline" class="text-primary" style="font-size: 0.875rem;"></iconify-icon>
                                             </div>
                                             <div>
