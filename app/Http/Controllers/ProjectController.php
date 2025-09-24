@@ -60,6 +60,7 @@ class ProjectController extends Controller
             'donor_name' => 'required|string|max:255',
             'donor_email' => 'required|email|max:255',
             'donor_phone' => 'nullable|string|max:20',
+            'referral_volunteer_id' => 'nullable|string|max:255',
             'message' => 'nullable|string|max:1000',
             'is_anonymous' => 'boolean',
         ]);
@@ -75,6 +76,7 @@ class ProjectController extends Controller
             'donor_name' => $request->donor_name,
             'donor_email' => $request->donor_email,
             'donor_phone' => $request->donor_phone,
+            'referral_volunteer_id' => $request->referral_volunteer_id,
             'amount' => $request->amount,
             'currency' => 'INR',
             'message' => $request->message,

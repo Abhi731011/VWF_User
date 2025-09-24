@@ -31,7 +31,7 @@
                                         <tbody>
                                             @foreach($requests as $request)
                                                 <tr>
-                                                    <td>#{{ $request->id }}</td>
+                                                    <td>{{ $request->request_id ?? 'N/A' }}</td>
                                                     <td>{{ $request->full_name }}</td>
                                                     <td>{{ $request->email }}</td>
                                                     <td>

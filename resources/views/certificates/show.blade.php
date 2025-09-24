@@ -38,7 +38,7 @@
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label fw-bold">Request ID:</label>
-                                            <p class="form-control-plaintext">#{{ $certificateRequest->id }}</p>
+                                            <p class="form-control-plaintext">{{ $certificateRequest->request_id ?? 'N/A' }}</p>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label fw-bold">Submitted Date:</label>

@@ -77,9 +77,13 @@ class CertificateRequestController extends Controller
             $imagePath = 'uploads/certificates/' . $imageName;
         }
 
+        // Generate unique request ID
+        $requestId = CertificateRequest::generateRequestId();
+
         // Create certificate request
         $certificateRequest = CertificateRequest::create([
             'user_id' => $user->id,
+            'request_id' => $requestId,
             'full_name' => $request->full_name,
             'email' => $request->email,
             'phone' => $request->phone,
@@ -94,7 +98,8 @@ class CertificateRequestController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Certificate request submitted successfully! We will review your request and get back to you soon.'
+            'message' => "Certificate request submitted successfully! Your request ID is {$requestId}. We will review your request and get back to you soon.",
+            'request_id' => $requestId
         ]);
     }
 

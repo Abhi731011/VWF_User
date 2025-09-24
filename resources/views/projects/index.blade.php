@@ -306,6 +306,12 @@
                     </div>
                     
                     <div class="mb-3">
+                        <label for="referral_volunteer_id" class="form-label">Referral Volunteer ID (Optional)</label>
+                        <input type="text" class="form-control" id="referral_volunteer_id" name="referral_volunteer_id" 
+                               placeholder="Enter volunteer ID if referred by someone">
+                    </div>
+                    
+                    <div class="mb-3">
                         <label for="message" class="form-label">Message (Optional)</label>
                         <textarea class="form-control" id="message" name="message" rows="3" 
                                   placeholder="Leave a message for the project organizers..."></textarea>
@@ -364,6 +370,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const donorName = formData.get('donor_name');
         const donorEmail = formData.get('donor_email');
         const donorPhone = formData.get('donor_phone');
+        const referralVolunteerId = formData.get('referral_volunteer_id');
         const message = formData.get('message');
         const isAnonymous = formData.get('is_anonymous') ? true : false;
         
@@ -385,6 +392,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 donor_name: donorName,
                 donor_email: donorEmail,
                 donor_phone: donorPhone,
+                referral_volunteer_id: referralVolunteerId,
                 message: message,
                 is_anonymous: isAnonymous
             })

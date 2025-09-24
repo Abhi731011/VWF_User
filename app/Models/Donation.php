@@ -14,6 +14,7 @@ class Donation extends Model
         'donor_name',
         'donor_email',
         'donor_phone',
+        'referral_volunteer_id',
         'amount',
         'currency',
         'message',
